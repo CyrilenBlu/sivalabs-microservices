@@ -2,6 +2,7 @@ package blu.cloud.catalogservice.controllers;
 
 import blu.cloud.catalogservice.exceptions.ProductNotFoundException;
 import blu.cloud.catalogservice.model.Product;
+import blu.cloud.catalogservice.model.ProductInventoryResponse;
 import blu.cloud.catalogservice.services.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,12 @@ public class ProductController {
     @GetMapping("/{code}")
     public Product productByCode(@PathVariable String code) {
         return productService.findProductByCode(code)
+                .orElseThrow(() -> new ProductNotFoundException("Product with code ["+code+"] doesn't exist"));
+    }
+
+    @GetMapping("/inventory/{code}")
+    public ProductInventoryResponse productInventoryByCode(@PathVariable String code) {
+        return productService.getProductInventoryByCode(code)
                 .orElseThrow(() -> new ProductNotFoundException("Product with code ["+code+"] doesn't exist"));
     }
 }
