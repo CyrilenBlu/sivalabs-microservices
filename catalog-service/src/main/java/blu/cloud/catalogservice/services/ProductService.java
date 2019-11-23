@@ -62,7 +62,7 @@ public class ProductService {
     public Optional<ProductInventoryResponse> getProductInventoryByCode(String productCode)
     {
         ResponseEntity<ProductInventoryResponse> itemResponseEntity =
-                restTemplate.getForEntity("http://inventory-service/api/inventory/{code}",
+                restTemplate.getForEntity("http://inventory-service/api/v1/items/{code}",
                         ProductInventoryResponse.class,
                         productCode);
         if (itemResponseEntity.getStatusCode() == HttpStatus.OK) {
